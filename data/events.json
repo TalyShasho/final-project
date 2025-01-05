@@ -1,0 +1,15 @@
+{
+  "trial": {
+    "Description": "Trial number"
+  },
+  "event": {
+    "Description": "Type of event (either music listening or rating)"
+  },
+  "music_type": {
+    "Description": "Type of music (tonal, discord, atonal)"
+  },
+  "valence_rating": {
+    "Description": "Emotional response rating to the music"
+  }
+}
+  

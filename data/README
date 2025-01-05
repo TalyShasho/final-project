@@ -1,0 +1,63 @@
+# README
+
+## Overview
+
+### Project Name
+
+Heart rate and insula activity increase in response to music in individuals with high interoceptive sensitivity
+
+### Year of Project
+
+The study was conducted between August and December 2019.
+
+### Experiment Overview
+
+This research focuses on understanding the relationship between interoceptive sensitivity and emotional responses to music. The study measures changes in pulse rate and insula activity in response to music in individuals with varying levels of interoceptive sensitivity. The experiment involved functional magnetic resonance imaging (fMRI) and heartbeat counting and discrimination tasks.
+
+### Contents of the Dataset
+
+The dataset includes fMRI data and heart rate measurements of 52 participants (31 females, 21 males) while they listened to various music pieces. It also contains results from heartbeat counting and discrimination tasks.
+
+### Independent Variables
+
+The primary independent variable is the individual differences in interoceptive sensitivity. This was assessed using heartbeat discrimination and counting tasks.
+
+### Dependent Variables
+
+The main dependent variables are changes in pulse rate and insula activity in response to music. Emotional valence ratings for the music pieces were also collected.
+
+### Control Variables
+
+Participants were selected based on specific criteria (non-musicians, right-handed, age range 18–35) to maintain a consistent study population. Environmental conditions and setup in the fMRI scanner were controlled.
+
+### Quality Assessment of the Data
+
+The data quality was ensured by standard preprocessing methods in fMRI analysis and careful recording of heart rate data. The dataset includes complete data from 49 participants after excluding data due to equipment malfunction.
+
+## Data Structure
+
+### Additional Data on figshare
+
+PPG and heartbeat discrimination task data are stored on figshare.
+https://doi.org/10.6084/m9.figshare.24874173
+
+### Trial Data
+
+The dataset includes TSV files for each participant, providing detailed trial information.
+
+- **onset**: Time of the event onset, relative to the start of the scan, in seconds.
+- **duration**: Duration of the event, in seconds.
+- **trial**: Trial number.
+- **event**: Type of event (either 'Music' for music listening or 'Rating' for emotional response rating).
+- **music_type**: Type of music stimulus (tonal, atonal, discord).
+- **valence_rating**: Emotional response strength to the music.
+
+## Access to the Data
+
+### Contact Person
+
+Toru Maekawa (tmaekawa@hiroshima-u.ac.jp)
+
+### Practical Information to Access the Data
+
+The dataset is anonymized, with participants assigned numeric codes. Access to detailed participant information is restricted to the research team.
