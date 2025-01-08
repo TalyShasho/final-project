@@ -16,4 +16,6 @@ plays interoceptive sensitivity in it.
 To address this challenge, we developed a script that navigates through each subject's folder, extracts the relevant files,
 and compiles their information into a single Excel file.
 
-2.
+2.We fwanted to see if there is a correlation between type of music and Emocional response. For this we used Pearson coeficient.
+
+3.
