@@ -1,6 +1,6 @@
-import pandas as pd
 import os
 import re
+import pandas as pd
 
 def merge_ppg_data(ppg_folder, output_path):
     # Print all files in the directory for debugging
@@ -26,49 +26,43 @@ def merge_ppg_data(ppg_folder, output_path):
 
             print(f"Processing file: {ppg_file} (subject_id: {subject_id}, session: {session})")
 
-            # Load only the first 15 rows of PPG data (first row is the header)
+            # Load the entire PPG data
             ppg_filepath = os.path.join(ppg_folder, ppg_file)
             try:
-                ppg_data = pd.read_csv(ppg_filepath, nrows=15)  # Limit to first 15 rows (header is row 0)
+                ppg_data = pd.read_csv(ppg_filepath)  # Load the CSV file
+
+                # Calculate interval to select 15 evenly spaced rows
+                total_rows = len(ppg_data)
+                if total_rows < 15:
+                    print(f"File {ppg_file} has less than 15 rows; including all rows.")
+                    selected_rows = ppg_data
+                else:
+                    interval = max(1, total_rows // 15)
+                    selected_rows = ppg_data.iloc[::interval].head(15)
+
+                # Add session and subject_id to the selected rows using .loc
+                selected_rows.loc[:, 'subject_id'] = subject_id
+                selected_rows.loc[:, 'session'] = session
+
+                # Append to the list
+                all_ppg_data.append(selected_rows)
             except Exception as e:
                 print(f"Error loading PPG file {ppg_file}: {e}")
                 continue
 
-            # Add session and subject_id to PPG data
-            ppg_data['subject_id'] = subject_id
-            ppg_data['session'] = session
-
-            # Append to the list
-            all_ppg_data.append(ppg_data)
-
     if not all_ppg_data:
         raise ValueError("No PPG data could be loaded. Ensure the files are correctly formatted.")
 
-    # Concatenate all PPG data into a single DataFrame
+    # All PPG data into a single DataFrame
     merged_ppg_data = pd.concat(all_ppg_data, ignore_index=True)
 
-    # Check if the merged data exceeds Excel's row limit
-    max_rows = 1048576  # Excel's row limit
-    if len(merged_ppg_data) > max_rows:
-        print(f"Warning: The dataset exceeds Excel's row limit of {max_rows} rows. Splitting data across multiple sheets.")
+    # Save to Excel
+    merged_ppg_data.to_excel(output_path, index=False)
+    print(f"Merged PPG data saved to {output_path}")
 
-        # Split the data into chunks of max_rows
-        for i in range(0, len(merged_ppg_data), max_rows):
-            chunk = merged_ppg_data.iloc[i:i+max_rows]
-            sheet_name = f"Sheet_{i//max_rows + 1}"
-
-            # Write each chunk to a new sheet in the Excel file
-            with pd.ExcelWriter(output_path, engine='xlsxwriter') as writer:
-                chunk.to_excel(writer, index=False, sheet_name=sheet_name)
-                print(f"Writing data to {sheet_name}")
-    else:
-        # If the data fits in one sheet, save it
-        merged_ppg_data.to_excel(output_path, index=False)
-        print(f"Merged PPG data saved to {output_path}")
-
-# Example usage
-ppg_folder = r"C:\Users\tshas\OneDrive\Documentos\python 2\2\data\PPG_data"  # folder containing PPG files
-output_path = r"C:\Users\tshas\OneDrive\Documentos\python 2\2\data\PPG_data.xlsx"  # Path to save the merged PPG data
+# maine
+ppg_folder = r"C:\Users\tshas\Downloads\PPG_data\PPG_data"  # folder containing PPG files
+output_path = r"C:\Users\tshas\OneDrive\Documentos\python 2\final_project\data\PPG_data.xlsx"  # Path to save the merged PPG data
 
 try:
     merge_ppg_data(ppg_folder, output_path)
